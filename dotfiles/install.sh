@@ -47,6 +47,8 @@ ln -sf "$DOTFILES_DIR/zsh/.zprofile" "$HOME/.zprofile"
 ln -sf "$DOTFILES_DIR/zsh/.zshenv" "$HOME/.zshenv"
 ln -sf "$DOTFILES_DIR/zsh/.p10k.zsh" "$HOME/.p10k.zsh"
 ln -sf "$DOTFILES_DIR/zsh/oh-my-zsh" "$HOME/.oh-my-zsh"
+
+mkdir -p "$HOME/.cargo"
 ln -sf "$DOTFILES_DIR/cargo/env" "$HOME/.cargo/env"
 
 mkdir -p "$HOME/.config/micro"
