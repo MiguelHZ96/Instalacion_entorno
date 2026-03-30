@@ -128,9 +128,7 @@ if [[ -d "$DOTFILES_DIR/zsh/root" ]]; then
     [[ -f "$DOTFILES_DIR/zsh/root/.zprofile" ]] && sudo cp "$DOTFILES_DIR/zsh/root/.zprofile" /root/.zprofile
     [[ -f "$DOTFILES_DIR/zsh/root/.p10k.zsh" ]] && sudo cp "$DOTFILES_DIR/zsh/root/.p10k.zsh" /root/.p10k.zsh
     
-    [[ -d "$DOTFILES_DIR/zsh/root/.oh-my-zsh" ]] && sudo cp -r "$DOTFILES_DIR/zsh/root/.oh-my-zsh" /root/.oh-my-zsh
     [[ -f "$DOTFILES_DIR/zsh/root/.cargo_env" ]] && sudo mkdir -p /root/.cargo && sudo cp "$DOTFILES_DIR/zsh/root/.cargo_env" /root/.cargo/env
-    [[ -d "$DOTFILES_DIR/zsh/root/.atuin" ]] && sudo cp -r "$DOTFILES_DIR/zsh/root/.atuin" /root/.atuin
     
     sudo mkdir -p /root/.config/micro
     [[ -f "$DOTFILES_DIR/zsh/root/.config/micro/settings.json" ]] && sudo cp "$DOTFILES_DIR/zsh/root/.config/micro/settings.json" /root/.config/micro/settings.json
@@ -138,6 +136,22 @@ if [[ -d "$DOTFILES_DIR/zsh/root" ]]; then
     
     sudo mkdir -p /root/.local/share/zoxide
     [[ -f "$DOTFILES_DIR/zsh/root/.local/share/zoxide/db.zo" ]] && sudo cp "$DOTFILES_DIR/zsh/root/.local/share/zoxide/db.zo" /root/.local/share/zoxide/db.zo
+    
+    echo "  Installing Oh My Zsh for root..."
+    if [[ ! -f "/root/.oh-my-zsh/oh-my-zsh.sh" ]]; then
+        sudo git clone https://github.com/ohmyzsh/ohmyzsh.git /root/.oh-my-zsh
+    fi
+    
+    echo "  Installing plugins for root..."
+    [[ ! -d "/root/.oh-my-zsh/themes/powerlevel10k" ]] && sudo git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /root/.oh-my-zsh/themes/powerlevel10k
+    [[ ! -d "/root/.oh-my-zsh/custom/plugins/fzf-tab" ]] && sudo git clone https://github.com/Aloxaf/fzf-tab /root/.oh-my-zsh/custom/plugins/fzf-tab
+    [[ ! -d "/root/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]] && sudo git clone https://github.com/zsh-users/zsh-autosuggestions /root/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+    [[ ! -d "/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]] && sudo git clone https://github.com/zsh-users/zsh-syntax-highlighting.git /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+    
+    echo "  Installing atuin for root..."
+    if ! sudo -u root command -v atuin &> /dev/null; then
+        curl -L https://setup.atuin.sh | sh -s -- --bin-dir /root/.local/bin
+    fi
     
     sudo chsh -s /bin/zsh
     echo "  Root configs installed"
