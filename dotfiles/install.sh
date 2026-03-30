@@ -83,7 +83,7 @@ spinner() {
 
 echo -e "${PURPLE_GLOW}▸${NC} ${BOLD}Instalando paquetes base...${NC}"
 (spinner 1 "Paquetes instalados" &) || true
-PACKAGES="zsh cargo micro zoxide fzf bat curl wget git python3-pip"
+PACKAGES="zsh cargo micro fzf bat curl wget git python3-pip"
 
 if [[ "$IS_DESKTOP" == "true" ]]; then
     PACKAGES="$PACKAGES fontconfig"
@@ -100,6 +100,13 @@ echo -e "${PURPLE_GLOW}▸${NC} ${BOLD}Instalando eza (alternativa moderna de ls
 (spinner 1 "eza instalado" &) || true
 if ! command -v eza &> /dev/null; then
     curl -fsSL https://github.com/eza-community/eza/releases/latest/download/eza_x86_64-unknown-linux-gnu.tar.gz | sudo tar xz -C /usr/local/bin
+fi
+wait 2>/dev/null
+
+echo -e "${PURPLE_GLOW}▸${NC} ${BOLD}Instalando zoxide (alternativa moderna de cd)...${NC}"
+(spinner 1 "zoxide instalado" &) || true
+if ! command -v zoxide &> /dev/null; then
+    curl -fsSL https://github.com/ajeetdsouza/zoxide/releases/latest/download/zoxide-x86_64-unknown-linux-musl.tar.gz | sudo tar xz -C /usr/local/bin
 fi
 wait 2>/dev/null
 
