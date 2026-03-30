@@ -203,10 +203,14 @@ ln -sf "$DOTFILES_DIR/micro/settings.json" "$HOME/.config/micro/settings.json"
 mkdir -p "$HOME/.local/share/zoxide"
 [[ -f "$DOTFILES_DIR/zoxide/db.zo" ]] && ln -sf "$DOTFILES_DIR/zoxide/db.zo" "$HOME/.local/share/zoxide/db.zo"
 
-if [[ "$IS_DESKTOP" == "true" ]]; then
+if [[ -d "$DOTFILES_DIR/zsh/root" ]]; then
     echo ""
     echo -e "${PURPLE_GLOW}▸${NC} ${BOLD}Instalando configuraciones de ROOT...${NC}"
-    if [[ -d "$DOTFILES_DIR/zsh/root" ]]; then
+    echo -e "${PURPLE_GLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
+    echo -e "  ${WHITE}1)${NC} Instalar configs de root"
+    echo -e "  ${WHITE}2)${NC} Omitir"
+    echo ""
+    read -p "  ¿Instalar configuraciones de root? [1]: " root_choice
         echo -e "${PURPLE_GLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
         echo -e "  ${WHITE}1)${NC} Instalar configs de root"
         echo -e "  ${WHITE}2)${NC} Omitir (servidor unico o ya configurado)"
