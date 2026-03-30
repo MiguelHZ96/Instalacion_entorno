@@ -21,10 +21,12 @@ else
     exit 1
 fi
 
+export PATH="$HOME/.local/bin:$PATH"
+
 echo ""
 echo "=== Installing Oh My Zsh (if not exists) ==="
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 
 echo ""
@@ -43,7 +45,7 @@ fi
 echo ""
 echo "=== Installing atuin ==="
 if ! command -v atuin &> /dev/null; then
-    curl --proto '=https' --tlsv1.2 -SfLy https://setup.atuin.sh | sh
+    curl -L https://setup.atuin.sh | sh
 fi
 
 echo ""
