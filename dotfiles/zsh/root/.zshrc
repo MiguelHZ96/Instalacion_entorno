@@ -31,10 +31,11 @@ alias la='eza -la --icons --git --color=always --group-directories-first'
 alias lt='eza --tree --level=2 --icons --group-directories-first'
 alias wgett='aria2c'
 
-export PATH="$PATH:/usr/sbin"
+export PATH="$PATH:/usr/sbin:$HOME/.atuin/bin:$HOME/.local/bin"
 
 eval "$(zoxide init zsh)"
-eval "$(atuin init zsh)"
+[[ -f "$HOME/.atuin/bin/env" ]] && source "$HOME/.atuin/bin/env"
+command -v atuin &> /dev/null && eval "$(atuin init zsh)"
 
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --tree --color=always $realpath 2>/dev/null || ls $realpath'
 zstyle ':fzf-tab:complete:*' fzf-min-height 20
