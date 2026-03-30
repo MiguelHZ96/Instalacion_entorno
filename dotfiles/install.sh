@@ -155,7 +155,7 @@ wait 2>/dev/null
 echo -e "${PURPLE_GLOW}▸${NC} ${BOLD}Instalando atuin...${NC}"
 (spinner 1 "atuin instalado" &) || true
 if ! command -v atuin &> /dev/null; then
-    curl -L https://setup.atuin.sh | sh
+    curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh
 fi
 wait 2>/dev/null
 
@@ -271,7 +271,7 @@ if [[ -d "$DOTFILES_DIR/zsh/root" ]]; then
                 [[ -f "$HOME/.atuin/bin/env" ]] && sudo cp "$HOME/.atuin/bin/env" /root/.atuin/bin/
                 echo -e "${PURPLE_BRIGHT}    ✓${NC} Atuin copiado a root"
             elif ! command -v atuin &> /dev/null; then
-                curl -L https://setup.atuin.sh | sh -s -- --bin-dir /root/.local/bin
+                curl --proto '=https' --tlsv1.2 -LsSf https://setup.atuin.sh | sh -s -- --bin-dir /root/.local/bin
             fi
         else
             echo -e "${PURPLE_GLOW}  └─${NC} Omitido por el usuario"
