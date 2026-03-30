@@ -65,13 +65,14 @@ fi
 
 echo ""
 echo "=== Installing Nerd Fonts ==="
-if [[ ! -d "$HOME/.local/share/fonts" ]] || [[ ! -f "$HOME/.local/share/fonts/MesloLGS NF Regular.ttf" ]]; then
-    mkdir -p "$HOME/.local/share/fonts"
-    curl -fLo "$HOME/.local/share/fonts/MesloLGS%20NF%20Regular.ttf" https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
-    curl -fLo "$HOME/.local/share/fonts/MesloLGS%20NF%20Bold.ttf" https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
-    curl -fLo "$HOME/.local/share/fonts/MesloLGS%20NF%20Italic.ttf" https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
-    curl -fLo "$HOME/.local/share/fonts/MesloLGS%20NF%20Bold%20Italic.ttf" https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
-    fc-cache -f -v
+FONT_DIR="/usr/local/share/fonts/meslo"
+if [[ ! -f "$FONT_DIR/MesloLGS NF Regular.ttf" ]]; then
+    sudo mkdir -p "$FONT_DIR"
+    sudo curl -fLo "$FONT_DIR/MesloLGS NF Regular.ttf" https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
+    sudo curl -fLo "$FONT_DIR/MesloLGS NF Bold.ttf" https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
+    sudo curl -fLo "$FONT_DIR/MesloLGS NF Italic.ttf" https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
+    sudo curl -fLo "$FONT_DIR/MesloLGS NF Bold Italic.ttf" https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
+    sudo fc-cache -f -v
 fi
 
 echo ""
