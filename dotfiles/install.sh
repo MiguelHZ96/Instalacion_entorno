@@ -179,6 +179,7 @@ if [[ -d "$DOTFILES_DIR/zsh/root" ]]; then
     
     echo -e "${PURPLE_GLOW}  ├─${NC} Instalando Oh My Zsh para root..."
     if [[ ! -f "/root/.oh-my-zsh/oh-my-zsh.sh" ]]; then
+        sudo rm -rf /root/.oh-my-zsh
         sudo git clone https://github.com/ohmyzsh/ohmyzsh.git /root/.oh-my-zsh
     fi
     
