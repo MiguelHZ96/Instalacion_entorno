@@ -113,6 +113,37 @@ mkdir -p "$HOME/.local/share/zoxide"
 [[ -f "$DOTFILES_DIR/zoxide/db.zo" ]] && ln -sf "$DOTFILES_DIR/zoxide/db.zo" "$HOME/.local/share/zoxide/db.zo"
 
 echo ""
+echo "=== Installing root configs ==="
+if [[ -d "$DOTFILES_DIR/zsh/root" ]]; then
+    ROOT_BACKUP="/root/.dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
+    sudo mkdir -p "$ROOT_BACKUP"
+    
+    [[ -f /root/.zshrc ]] && sudo cp -r /root/.zshrc "$ROOT_BACKUP/"
+    [[ -f /root/.zshenv ]] && sudo cp -r /root/.zshenv "$ROOT_BACKUP/"
+    [[ -f /root/.zprofile ]] && sudo cp -r /root/.zprofile "$ROOT_BACKUP/"
+    [[ -f /root/.p10k.zsh ]] && sudo cp -r /root/.p10k.zsh "$ROOT_BACKUP/"
+    
+    sudo cp "$DOTFILES_DIR/zsh/root/.zshrc" /root/.zshrc
+    sudo cp "$DOTFILES_DIR/zsh/root/.zshenv" /root/.zshenv
+    [[ -f "$DOTFILES_DIR/zsh/root/.zprofile" ]] && sudo cp "$DOTFILES_DIR/zsh/root/.zprofile" /root/.zprofile
+    [[ -f "$DOTFILES_DIR/zsh/root/.p10k.zsh" ]] && sudo cp "$DOTFILES_DIR/zsh/root/.p10k.zsh" /root/.p10k.zsh
+    
+    [[ -d "$DOTFILES_DIR/zsh/root/.oh-my-zsh" ]] && sudo cp -r "$DOTFILES_DIR/zsh/root/.oh-my-zsh" /root/.oh-my-zsh
+    [[ -f "$DOTFILES_DIR/zsh/root/.cargo_env" ]] && sudo mkdir -p /root/.cargo && sudo cp "$DOTFILES_DIR/zsh/root/.cargo_env" /root/.cargo/env
+    [[ -d "$DOTFILES_DIR/zsh/root/.atuin" ]] && sudo cp -r "$DOTFILES_DIR/zsh/root/.atuin" /root/.atuin
+    
+    sudo mkdir -p /root/.config/micro
+    [[ -f "$DOTFILES_DIR/zsh/root/.config/micro/settings.json" ]] && sudo cp "$DOTFILES_DIR/zsh/root/.config/micro/settings.json" /root/.config/micro/settings.json
+    [[ -f "$DOTFILES_DIR/zsh/root/.config/micro/bindings.json" ]] && sudo cp "$DOTFILES_DIR/zsh/root/.config/micro/bindings.json" /root/.config/micro/bindings.json
+    
+    sudo mkdir -p /root/.local/share/zoxide
+    [[ -f "$DOTFILES_DIR/zsh/root/.local/share/zoxide/db.zo" ]] && sudo cp "$DOTFILES_DIR/zsh/root/.local/share/zoxide/db.zo" /root/.local/share/zoxide/db.zo
+    
+    sudo chsh -s /bin/zsh
+    echo "  Root configs installed"
+fi
+
+echo ""
 echo "=== Changing shell to zsh ==="
 sudo chsh -s /bin/zsh
 
