@@ -31,6 +31,19 @@ if [[ ! -f "$HOME/.oh-my-zsh/oh-my-zsh.sh" ]]; then
 fi
 
 echo ""
+echo "=== Installing powerlevel10k ==="
+if [[ ! -d "$HOME/.oh-my-zsh/themes/powerlevel10k" ]]; then
+    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME/.oh-my-zsh/themes/powerlevel10k"
+fi
+
+echo ""
+echo "=== Installing fzf-tab ==="
+FZF_TAB_DIR="$HOME/.oh-my-zsh/custom/plugins/fzf-tab"
+if [[ ! -d "$FZF_TAB_DIR" ]]; then
+    git clone https://github.com/Aloxaf/fzf-tab "$FZF_TAB_DIR"
+fi
+
+echo ""
 echo "=== Installing zsh-autosuggestions ==="
 ZSH_AUTOSUGGEST_DIR="$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
 if [[ ! -d "$ZSH_AUTOSUGGEST_DIR" ]]; then
