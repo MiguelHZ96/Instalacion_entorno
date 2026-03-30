@@ -5,14 +5,13 @@ set -e
 PURPLE='\033[0;35m'
 PURPLE_BRIGHT='\033[1;35m'
 PURPLE_GLOW='\033[38;5;135m'
-CYAN='\033[0;36m'
 WHITE='\033[1;37m'
 NC='\033[0m'
 BOLD='\033[1m'
 
 clear
 
-cat << 'EOF'
+cat << EOF
 ${PURPLE}
     ███╗   ███╗███████╗██████╗  ██████╗  ██████╗██╗  ██╗ █████╗ ██╗███╗   ██╗███████╗██████╗ 
     ████╗ ████║██╔════╝██╔══██╗██╔═══██╗██╔════╝██║  ██║██╔══██╗██║████╗  ██║██╔════╝██╔══██╗
@@ -20,11 +19,11 @@ ${PURPLE}
     ██║╚██╔╝██║██╔══╝  ██╔══██╗██║   ██║██║     ██╔══██║██╔══██║██║██║╚██╗██║██╔══╝  ██╔══██╗
     ██║ ╚═╝ ██║███████╗██║  ██║╚██████╔╝╚██████╗██║  ██║██║  ██║██║██║ ╚████║███████╗██║  ██║
     ╚═╝     ╚═╝╚══════╝╚═╝  ╚═╝ ╚═════╝  ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝
+${PURPLE_GLOW}═══════════════════════════════════════════════════════════════════════════════════${NC}
+${PURPLE_GLOW}                              by MiguelHZ96${NC}
+${PURPLE_GLOW}═══════════════════════════════════════════════════════════════════════════════════${NC}
 EOF
 
-echo -e "${PURPLE_GLOW}═══════════════════════════════════════════════════════════════════════════════════${NC}"
-echo -e "${PURPLE_GLOW}                              by MiguelHZ96${NC}"
-echo -e "${PURPLE_GLOW}═══════════════════════════════════════════════════════════════════════════════════${NC}"
 echo ""
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
@@ -32,19 +31,20 @@ DOTFILES_DIR="$SCRIPT_DIR"
 BACKUP_DIR="$HOME/.dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
 
 spinner() {
-    PID=$!
-    PIDS=($PID)
-    while kill -0 $PID 2>/dev/null; do
+    local delay=0.1
+    local duration=$1
+    local start=$SECONDS
+    while (( SECONDS - start < duration )); do
         for s in / - \\ \|; do
-            printf "\r${PURPLE_GLOW}[${s}]${NC} $1"
-            sleep .1
+            printf "\r${PURPLE_GLOW}[${s}]${NC} $2"
+            sleep $delay
         done
     done
-    printf "\r${PURPLE_BRIGHT}[✓]${NC} $1\n"
+    printf "\r${PURPLE_BRIGHT}[✓]${NC} $2\n"
 }
 
 echo -e "${PURPLE_GLOW}▸${NC} ${BOLD}Instalando paquetes...${NC}"
-(spinner "Paquetes instalados" &) || true
+(spinner 1 "Paquetes instalados" &) || true
 PACKAGES="zsh cargo micro zoxide fzf bat eza curl wget git python3-pip fontconfig"
 if command -v nala &> /dev/null; then
     sudo nala install -y $PACKAGES
@@ -59,7 +59,7 @@ wait 2>/dev/null
 export PATH="$HOME/.local/bin:$PATH"
 
 echo -e "${PURPLE_GLOW}▸${NC} ${BOLD}Instalando Oh My Zsh...${NC}"
-(spinner "Oh My Zsh instalado" &) || true
+(spinner 1 "Oh My Zsh instalado" &) || true
 if [[ ! -f "$HOME/.oh-my-zsh/oh-my-zsh.sh" ]]; then
     rm -rf "$HOME/.oh-my-zsh"
     git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh"
@@ -67,14 +67,14 @@ fi
 wait 2>/dev/null
 
 echo -e "${PURPLE_GLOW}▸${NC} ${BOLD}Instalando powerlevel10k...${NC}"
-(spinner "powerlevel10k instalado" &) || true
+(spinner 1 "powerlevel10k instalado" &) || true
 if [[ ! -d "$HOME/.oh-my-zsh/themes/powerlevel10k" ]]; then
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME/.oh-my-zsh/themes/powerlevel10k"
 fi
 wait 2>/dev/null
 
 echo -e "${PURPLE_GLOW}▸${NC} ${BOLD}Instalando fzf-tab...${NC}"
-(spinner "fzf-tab instalado" &) || true
+(spinner 1 "fzf-tab instalado" &) || true
 FZF_TAB_DIR="$HOME/.oh-my-zsh/custom/plugins/fzf-tab"
 if [[ ! -d "$FZF_TAB_DIR" ]]; then
     git clone https://github.com/Aloxaf/fzf-tab "$FZF_TAB_DIR"
@@ -82,7 +82,7 @@ fi
 wait 2>/dev/null
 
 echo -e "${PURPLE_GLOW}▸${NC} ${BOLD}Instalando zsh-autosuggestions...${NC}"
-(spinner "zsh-autosuggestions instalado" &) || true
+(spinner 1 "zsh-autosuggestions instalado" &) || true
 ZSH_AUTOSUGGEST_DIR="$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
 if [[ ! -d "$ZSH_AUTOSUGGEST_DIR" ]]; then
     git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_AUTOSUGGEST_DIR"
@@ -90,7 +90,7 @@ fi
 wait 2>/dev/null
 
 echo -e "${PURPLE_GLOW}▸${NC} ${BOLD}Instalando zsh-syntax-highlighting...${NC}"
-(spinner "zsh-syntax-highlighting instalado" &) || true
+(spinner 1 "zsh-syntax-highlighting instalado" &) || true
 ZSH_SYNTAX_DIR="$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
 if [[ ! -d "$ZSH_SYNTAX_DIR" ]]; then
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_SYNTAX_DIR"
@@ -98,14 +98,14 @@ fi
 wait 2>/dev/null
 
 echo -e "${PURPLE_GLOW}▸${NC} ${BOLD}Instalando atuin...${NC}"
-(spinner "atuin instalado" &) || true
+(spinner 1 "atuin instalado" &) || true
 if ! command -v atuin &> /dev/null; then
     curl -L https://setup.atuin.sh | sh
 fi
 wait 2>/dev/null
 
 echo -e "${PURPLE_GLOW}▸${NC} ${BOLD}Instalando Nerd Fonts (MesloLGS)...${NC}"
-(spinner "Nerd Fonts instalados" &) || true
+(spinner 1 "Nerd Fonts instalados" &) || true
 FONT_DIR="/usr/local/share/fonts/meslo"
 if [[ ! -f "$FONT_DIR/MesloLGS NF Regular.ttf" ]]; then
     sudo mkdir -p "$FONT_DIR"
@@ -204,11 +204,12 @@ sudo chsh -s $(which zsh)
 
 echo ""
 echo -e "${PURPLE_GLOW}═══════════════════════════════════════════════════════════════════════════════════${NC}"
-echo -e "${PURPLE_BRIGHT}"
-echo "     ▄▀▄ █▀▄ ▄▀▀   █▀▀ █▀█ █▀█ █ █▀ █▀▀   █▀▄ █▀▀ █▀ ▀█▀"
-echo "     █▀█ █▀▄ ░▀▄   █▀  █▄█ █▀▄ █ █▀ ▀▀█   █▀▄ █▀  █▀  █ "
-echo "     ▀ ▀ ▀▀  ▀▀▀   ▀   ▀ ▀ ▀  ▀ ▀ ▀▀ ▀▀▀   ▀ ▀ ▀▀▀ ▀   ▀"
-echo -e "${NC}"
+cat << 'EOF'
+${PURPLE_BRIGHT}
+     ▄▀▄ █▀▄ ▄▀▀   █▀▀ █▀█ █▀█ █ █▀ █▀▀   █▀▄ █▀▀ █▀ ▀█▀
+     █▀█ █▀▄ ░▀▄   █▀  █▄█ █▀▄ █ █▀ ▀▀█   █▀▄ █▀  █▀  █ 
+     ▀ ▀ ▀▀  ▀▀▀   ▀   ▀ ▀ ▀  ▀ ▀ ▀▀ ▀▀▀   ▀ ▀ ▀▀▀ ▀   ▀
+EOF
 echo -e "${PURPLE_GLOW}═══════════════════════════════════════════════════════════════════════════════════${NC}"
 echo ""
 echo -e "${PURPLE_GLOW}[✓]${NC} ${BOLD}Cierra sesion y vuelve a entrar, o ejecuta: ${WHITE}exec zsh${NC}"
