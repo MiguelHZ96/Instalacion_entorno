@@ -144,6 +144,14 @@ if [[ ! -d "$ZSH_SYNTAX_DIR" ]]; then
 fi
 wait 2>/dev/null
 
+echo -e "${PURPLE_GLOW}▸${NC} ${BOLD}Instalando fast-syntax-highlighting...${NC}"
+(spinner 1 "fast-syntax-highlighting instalado" &) || true
+FSH_DIR="$HOME/.oh-my-zsh/custom/plugins/fast-syntax-highlighting"
+if [[ ! -d "$FSH_DIR" ]]; then
+    git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git "$FSH_DIR"
+fi
+wait 2>/dev/null
+
 echo -e "${PURPLE_GLOW}▸${NC} ${BOLD}Instalando atuin...${NC}"
 (spinner 1 "atuin instalado" &) || true
 if ! command -v atuin &> /dev/null; then
@@ -251,6 +259,7 @@ if [[ -d "$DOTFILES_DIR/zsh/root" ]]; then
             [[ ! -d "/root/.oh-my-zsh/custom/plugins/fzf-tab" ]] && sudo git clone https://github.com/Aloxaf/fzf-tab /root/.oh-my-zsh/custom/plugins/fzf-tab
             [[ ! -d "/root/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]] && sudo git clone https://github.com/zsh-users/zsh-autosuggestions /root/.oh-my-zsh/custom/plugins/zsh-autosuggestions
             [[ ! -d "/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]] && sudo git clone https://github.com/zsh-users/zsh-syntax-highlighting.git /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+            [[ ! -d "/root/.oh-my-zsh/custom/plugins/fast-syntax-highlighting" ]] && sudo git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git /root/.oh-my-zsh/custom/plugins/fast-syntax-highlighting
             
             echo -e "${PURPLE_GLOW}  └─${NC} Instalando atuin para root..."
             ATUIN_USER="$HOME/.atuin/bin/atuin"

@@ -37,5 +37,9 @@ eval "$(zoxide init zsh)"
 [[ -f "$HOME/.atuin/bin/env" ]] && source "$HOME/.atuin/bin/env"
 command -v atuin &> /dev/null && eval "$(atuin init zsh)"
 
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=93,bold'
+
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --tree --color=always $realpath 2>/dev/null || ls $realpath'
 zstyle ':fzf-tab:complete:*' fzf-min-height 20
+
+eval "$(fsh --setup)"

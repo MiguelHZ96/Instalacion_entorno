@@ -36,5 +36,9 @@ export PATH="$PATH:/usr/sbin"
 eval "$(zoxide init zsh)"
 eval "$(atuin init zsh)"
 
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=93,bold'
+
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --tree --color=always $realpath 2>/dev/null || ls $realpath'
 zstyle ':fzf-tab:complete:*' fzf-min-height 20
+
+eval "$(fsh --setup)"
