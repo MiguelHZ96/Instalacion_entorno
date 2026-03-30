@@ -6,10 +6,10 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DOTFILES_DIR="$SCRIPT_DIR"
 BACKUP_DIR="$HOME/.dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
 
-echo "=== Dotfiles Installer ==="
+echo "=== Instalador de Dotfiles ==="
 
 echo ""
-echo "=== Installing packages ==="
+echo "=== Instalando paquetes ==="
 PACKAGES="zsh cargo micro zoxide fzf bat eza curl wget git python3-pip fontconfig"
 
 if command -v nala &> /dev/null; then
@@ -17,54 +17,54 @@ if command -v nala &> /dev/null; then
 elif command -v apt &> /dev/null; then
     sudo apt install -y $PACKAGES
 else
-    echo "No apt/nala found. Install packages manually."
+    echo "No se encontro apt/nala. Instala los paquetes manualmente."
     exit 1
 fi
 
 export PATH="$HOME/.local/bin:$PATH"
 
 echo ""
-echo "=== Installing Oh My Zsh ==="
+echo "=== Instalando Oh My Zsh ==="
 if [[ ! -f "$HOME/.oh-my-zsh/oh-my-zsh.sh" ]]; then
     rm -rf "$HOME/.oh-my-zsh"
     git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh"
 fi
 
 echo ""
-echo "=== Installing powerlevel10k ==="
+echo "=== Instalando powerlevel10k ==="
 if [[ ! -d "$HOME/.oh-my-zsh/themes/powerlevel10k" ]]; then
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME/.oh-my-zsh/themes/powerlevel10k"
 fi
 
 echo ""
-echo "=== Installing fzf-tab ==="
+echo "=== Instalando fzf-tab ==="
 FZF_TAB_DIR="$HOME/.oh-my-zsh/custom/plugins/fzf-tab"
 if [[ ! -d "$FZF_TAB_DIR" ]]; then
     git clone https://github.com/Aloxaf/fzf-tab "$FZF_TAB_DIR"
 fi
 
 echo ""
-echo "=== Installing zsh-autosuggestions ==="
+echo "=== Instalando zsh-autosuggestions ==="
 ZSH_AUTOSUGGEST_DIR="$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
 if [[ ! -d "$ZSH_AUTOSUGGEST_DIR" ]]; then
     git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_AUTOSUGGEST_DIR"
 fi
 
 echo ""
-echo "=== Installing zsh-syntax-highlighting ==="
+echo "=== Instalando zsh-syntax-highlighting ==="
 ZSH_SYNTAX_DIR="$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
 if [[ ! -d "$ZSH_SYNTAX_DIR" ]]; then
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_SYNTAX_DIR"
 fi
 
 echo ""
-echo "=== Installing atuin ==="
+echo "=== Instalando atuin ==="
 if ! command -v atuin &> /dev/null; then
     curl -L https://setup.atuin.sh | sh
 fi
 
 echo ""
-echo "=== Installing Nerd Fonts ==="
+echo "=== Instalando Nerd Fonts ==="
 FONT_DIR="/usr/local/share/fonts/meslo"
 if [[ ! -f "$FONT_DIR/MesloLGS NF Regular.ttf" ]]; then
     sudo mkdir -p "$FONT_DIR"
@@ -76,13 +76,13 @@ if [[ ! -f "$FONT_DIR/MesloLGS NF Regular.ttf" ]]; then
 fi
 
 echo ""
-echo "=== Backing up existing configs ==="
+echo "=== Respaldando configuraciones existentes ==="
 mkdir -p "$BACKUP_DIR"
 
 backup_file() {
     if [[ -e "$HOME/$1" ]]; then
         cp -r "$HOME/$1" "$BACKUP_DIR/"
-        echo "  Backed up: $1"
+        echo "  Respaldado: $1"
     fi
 }
 
@@ -96,7 +96,7 @@ backup_file ".cargo/env"
 [[ -f "$HOME/.local/share/zoxide/db.zo" ]] && backup_file ".local/share/zoxide"
 
 echo ""
-echo "=== Linking configs ==="
+echo "=== Vinculando configuraciones ==="
 ln -sf "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
 ln -sf "$DOTFILES_DIR/zsh/.zprofile" "$HOME/.zprofile"
 ln -sf "$DOTFILES_DIR/zsh/.zshenv" "$HOME/.zshenv"
@@ -113,7 +113,7 @@ mkdir -p "$HOME/.local/share/zoxide"
 [[ -f "$DOTFILES_DIR/zoxide/db.zo" ]] && ln -sf "$DOTFILES_DIR/zoxide/db.zo" "$HOME/.local/share/zoxide/db.zo"
 
 echo ""
-echo "=== Installing root configs ==="
+echo "=== Instalando configuraciones de root ==="
 if [[ -d "$DOTFILES_DIR/zsh/root" ]]; then
     ROOT_BACKUP="/root/.dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
     sudo mkdir -p "$ROOT_BACKUP"
@@ -137,31 +137,31 @@ if [[ -d "$DOTFILES_DIR/zsh/root" ]]; then
     sudo mkdir -p /root/.local/share/zoxide
     [[ -f "$DOTFILES_DIR/zsh/root/.local/share/zoxide/db.zo" ]] && sudo cp "$DOTFILES_DIR/zsh/root/.local/share/zoxide/db.zo" /root/.local/share/zoxide/db.zo
     
-    echo "  Installing Oh My Zsh for root..."
+    echo "  Instalando Oh My Zsh para root..."
     if [[ ! -f "/root/.oh-my-zsh/oh-my-zsh.sh" ]]; then
         sudo git clone https://github.com/ohmyzsh/ohmyzsh.git /root/.oh-my-zsh
     fi
     
-    echo "  Installing plugins for root..."
+    echo "  Instalando plugins para root..."
     [[ ! -d "/root/.oh-my-zsh/themes/powerlevel10k" ]] && sudo git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /root/.oh-my-zsh/themes/powerlevel10k
     [[ ! -d "/root/.oh-my-zsh/custom/plugins/fzf-tab" ]] && sudo git clone https://github.com/Aloxaf/fzf-tab /root/.oh-my-zsh/custom/plugins/fzf-tab
     [[ ! -d "/root/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]] && sudo git clone https://github.com/zsh-users/zsh-autosuggestions /root/.oh-my-zsh/custom/plugins/zsh-autosuggestions
     [[ ! -d "/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]] && sudo git clone https://github.com/zsh-users/zsh-syntax-highlighting.git /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
     
-    echo "  Installing atuin for root..."
+    echo "  Instalando atuin para root..."
     if ! sudo -u root command -v atuin &> /dev/null; then
         curl -L https://setup.atuin.sh | sh -s -- --bin-dir /root/.local/bin
     fi
     
     sudo chsh -s $(which zsh)
-    echo "  Root configs installed"
+    echo "  Configuraciones de root instaladas"
 fi
 
 echo ""
-echo "=== Changing shell to zsh ==="
+echo "=== Cambiando shell a zsh ==="
 sudo chsh -s $(which zsh)
 
 echo ""
-echo "=== Done! ==="
-echo "Log out and log back in, or run: exec zsh"
-echo "Backup saved at: $BACKUP_DIR"
+echo "=== Listo! ==="
+echo "Cierra sesion y vuelve a entrar, o ejecuta: exec zsh"
+echo "Respaldo guardado en: $BACKUP_DIR"
