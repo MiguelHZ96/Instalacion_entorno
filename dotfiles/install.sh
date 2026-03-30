@@ -64,6 +64,17 @@ if ! command -v atuin &> /dev/null; then
 fi
 
 echo ""
+echo "=== Installing Nerd Fonts ==="
+if [[ ! -d "$HOME/.local/share/fonts" ]] || [[ ! -f "$HOME/.local/share/fonts/MesloLGS NF Regular.ttf" ]]; then
+    mkdir -p "$HOME/.local/share/fonts"
+    curl -fLo "$HOME/.local/share/fonts/MesloLGS%20NF%20Regular.ttf" https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Regular.ttf
+    curl -fLo "$HOME/.local/share/fonts/MesloLGS%20NF%20Bold.ttf" https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold.ttf
+    curl -fLo "$HOME/.local/share/fonts/MesloLGS%20NF%20Italic.ttf" https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Italic.ttf
+    curl -fLo "$HOME/.local/share/fonts/MesloLGS%20NF%20Bold%20Italic.ttf" https://github.com/romkatv/powerlevel10k-media/raw/master/MesloLGS%20NF%20Bold%20Italic.ttf
+    fc-cache -f -v
+fi
+
+echo ""
 echo "=== Backing up existing configs ==="
 mkdir -p "$BACKUP_DIR"
 
