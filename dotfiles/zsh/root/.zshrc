@@ -8,6 +8,9 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 
 plugins=(git fzf-tab zsh-autosuggestions zsh-syntax-highlighting)
 
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --tree --color=always $realpath 2>/dev/null || ls $realpath'
+zstyle ':fzf-tab:complete:*' fzf-min-height 20
+
 source $ZSH/oh-my-zsh.sh
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -38,9 +41,6 @@ eval "$(zoxide init zsh)"
 command -v atuin &> /dev/null && eval "$(atuin init zsh)"
 
 ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=93,bold'
-
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --tree --color=always $realpath 2>/dev/null || ls $realpath'
-zstyle ':fzf-tab:complete:*' fzf-min-height 20
 
 FAST_SYNTAX_HIGHLIGHTING_THEME="$HOME/.config/fsh/mytheme.ini"
 source "$HOME/.oh-my-zsh/custom/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
