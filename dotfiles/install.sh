@@ -24,9 +24,9 @@ fi
 export PATH="$HOME/.local/bin:$PATH"
 
 echo ""
-echo "=== Installing Oh My Zsh (if not exists) ==="
+echo "=== Installing Oh My Zsh ==="
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
-    RUNZSH=no CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh"
 fi
 
 echo ""
@@ -37,9 +37,10 @@ if [[ ! -d "$ZSH_AUTOSUGGEST_DIR" ]]; then
 fi
 
 echo ""
-echo "=== Installing thefuck ==="
-if ! command -v thefuck &> /dev/null; then
-    pip3 install thefuck --break-system-packages
+echo "=== Installing zsh-syntax-highlighting ==="
+ZSH_SYNTAX_DIR="$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+if [[ ! -d "$ZSH_SYNTAX_DIR" ]]; then
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_SYNTAX_DIR"
 fi
 
 echo ""
