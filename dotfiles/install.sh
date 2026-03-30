@@ -83,19 +83,23 @@ spinner() {
 
 echo -e "${PURPLE_GLOW}▸${NC} ${BOLD}Instalando paquetes base...${NC}"
 (spinner 1 "Paquetes instalados" &) || true
-PACKAGES="zsh cargo micro zoxide fzf bat eza curl wget git python3-pip"
+PACKAGES="zsh cargo micro zoxide fzf bat curl wget git python3-pip"
 
 if [[ "$IS_DESKTOP" == "true" ]]; then
     PACKAGES="$PACKAGES fontconfig"
 fi
 
 if command -v nala &> /dev/null; then
-    sudo nala install -y $PACKAGES
-elif command -v apt &> /dev/null; then
-    sudo apt install -y $PACKAGES
-else
-    echo -e "${PURPLE_GLOW}✗${NC} No se encontro apt/nala."
-    exit 1
+    sudo nala install -y $PACKAGES 2>/dev/null || true
+fi
+if command -v apt &> /dev/null; then
+    sudo apt install -y $PACKAGES 2>/dev/null || true
+fi
+
+echo -e "${PURPLE_GLOW}▸${NC} ${BOLD}Instalando eza (alternativa moderna de ls)...${NC}"
+(spinner 1 "eza instalado" &) || true
+if ! command -v eza &> /dev/null; then
+    curl -fsSL https://github.com/eza-community/eza/releases/latest/download/eza_x86_64-unknown-linux-gnu.tar.gz | sudo tar xz -C /usr/local/bin
 fi
 wait 2>/dev/null
 
