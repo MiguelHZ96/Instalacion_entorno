@@ -106,7 +106,7 @@ wait 2>/dev/null
 echo -e "${PURPLE_GLOW}▸${NC} ${BOLD}Instalando zoxide (alternativa moderna de cd)...${NC}"
 (spinner 1 "zoxide instalado" &) || true
 if ! command -v zoxide &> /dev/null; then
-    curl -fsSL https://github.com/ajeetdsouza/zoxide/releases/latest/download/zoxide-x86_64-unknown-linux-musl.tar.gz | sudo tar xz -C /usr/local/bin
+    curl -fsSL https://github.com/ajeetdsouza/zoxide/releases/download/v0.9.9/zoxide-0.9.9-x86_64-unknown-linux-musl.tar.gz | sudo tar xz -C /usr/local/bin
 fi
 wait 2>/dev/null
 
