@@ -222,8 +222,8 @@ if [[ -d "$DOTFILES_DIR/zsh/root" ]]; then
     echo -e "  ${WHITE}2)${NC} Omitir"
     echo ""
     read -p "  ¿Instalar configuraciones de root? [1]: " root_choice
-        
-        if [[ "$root_choice" != "2" ]]; then
+    
+    if [[ "$root_choice" != "2" ]]; then
             ROOT_BACKUP="/root/.dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
             sudo mkdir -p "$ROOT_BACKUP"
             
@@ -277,7 +277,6 @@ if [[ -d "$DOTFILES_DIR/zsh/root" ]]; then
             echo -e "${PURPLE_GLOW}  └─${NC} Omitido por el usuario"
         fi
     fi
-fi
 
 echo ""
 echo -e "${PURPLE_GLOW}▸${NC} ${BOLD}Cambiando shell a zsh...${NC}"
