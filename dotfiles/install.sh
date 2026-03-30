@@ -25,7 +25,8 @@ export PATH="$HOME/.local/bin:$PATH"
 
 echo ""
 echo "=== Installing Oh My Zsh ==="
-if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
+if [[ ! -f "$HOME/.oh-my-zsh/oh-my-zsh.sh" ]]; then
+    rm -rf "$HOME/.oh-my-zsh"
     git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh"
 fi
 
