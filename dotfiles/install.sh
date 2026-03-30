@@ -211,6 +211,9 @@ ln -sf "$DOTFILES_DIR/micro/settings.json" "$HOME/.config/micro/settings.json"
 mkdir -p "$HOME/.local/share/zoxide"
 [[ -f "$DOTFILES_DIR/zoxide/db.zo" ]] && ln -sf "$DOTFILES_DIR/zoxide/db.zo" "$HOME/.local/share/zoxide/db.zo"
 
+mkdir -p "$HOME/.config/fsh"
+[[ -f "$DOTFILES_DIR/fsh/mytheme.ini" ]] && ln -sf "$DOTFILES_DIR/fsh/mytheme.ini" "$HOME/.config/fsh/mytheme.ini"
+
 if [[ -d "$DOTFILES_DIR/zsh/root" ]]; then
     echo ""
     echo -e "${PURPLE_GLOW}▸${NC} ${BOLD}Instalando configuraciones de ROOT...${NC}"
@@ -219,11 +222,6 @@ if [[ -d "$DOTFILES_DIR/zsh/root" ]]; then
     echo -e "  ${WHITE}2)${NC} Omitir"
     echo ""
     read -p "  ¿Instalar configuraciones de root? [1]: " root_choice
-        echo -e "${PURPLE_GLOW}━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━${NC}"
-        echo -e "  ${WHITE}1)${NC} Instalar configs de root"
-        echo -e "  ${WHITE}2)${NC} Omitir (servidor unico o ya configurado)"
-        echo ""
-        read -p "  ¿Instalar configuraciones de root? [1]: " root_choice
         
         if [[ "$root_choice" != "2" ]]; then
             ROOT_BACKUP="/root/.dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
@@ -247,6 +245,9 @@ if [[ -d "$DOTFILES_DIR/zsh/root" ]]; then
             
             sudo mkdir -p /root/.local/share/zoxide
             [[ -f "$DOTFILES_DIR/zsh/root/.local/share/zoxide/db.zo" ]] && sudo cp "$DOTFILES_DIR/zsh/root/.local/share/zoxide/db.zo" /root/.local/share/zoxide/db.zo
+            
+            sudo mkdir -p /root/.config/fsh
+            [[ -f "$DOTFILES_DIR/fsh/mytheme.ini" ]] && sudo cp "$DOTFILES_DIR/fsh/mytheme.ini" /root/.config/fsh/mytheme.ini
             
             echo -e "${PURPLE_GLOW}  ├─${NC} Instalando Oh My Zsh para root..."
             if [[ ! -f "/root/.oh-my-zsh/oh-my-zsh.sh" ]]; then

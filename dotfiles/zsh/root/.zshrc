@@ -42,4 +42,5 @@ ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=93,bold'
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza --tree --color=always $realpath 2>/dev/null || ls $realpath'
 zstyle ':fzf-tab:complete:*' fzf-min-height 20
 
-eval "$(fsh --setup)"
+FAST_SYNTAX_HIGHLIGHTING_THEME="$HOME/.config/fsh/mytheme.ini"
+source "$HOME/.oh-my-zsh/custom/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
