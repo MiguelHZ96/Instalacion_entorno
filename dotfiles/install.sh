@@ -153,13 +153,13 @@ if [[ -d "$DOTFILES_DIR/zsh/root" ]]; then
         curl -L https://setup.atuin.sh | sh -s -- --bin-dir /root/.local/bin
     fi
     
-    sudo chsh -s /bin/zsh
+    sudo chsh -s $(which zsh)
     echo "  Root configs installed"
 fi
 
 echo ""
 echo "=== Changing shell to zsh ==="
-sudo chsh -s /bin/zsh
+sudo chsh -s $(which zsh)
 
 echo ""
 echo "=== Done! ==="
