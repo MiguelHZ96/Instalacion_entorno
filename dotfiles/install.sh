@@ -190,7 +190,12 @@ if [[ -d "$DOTFILES_DIR/zsh/root" ]]; then
     [[ ! -d "/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]] && sudo git clone https://github.com/zsh-users/zsh-syntax-highlighting.git /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
     
     echo -e "${PURPLE_GLOW}  └─${NC} Instalando atuin para root..."
-    if ! sudo -u root command -v atuin &> /dev/null; then
+    if [[ -f "$HOME/.atuin/bin/atuin" ]]; then
+        sudo mkdir -p /root/.atuin/bin
+        sudo cp "$HOME/.atuin/bin/atuin" /root/.atuin/bin/
+        sudo cp "$HOME/.atuin/bin/atuin-update" /root/.atuin/bin/ 2>/dev/null || true
+        sudo cp "$HOME/.atuin/bin/env" /root/.atuin/bin/
+    elif ! command -v atuin &> /dev/null; then
         curl -L https://setup.atuin.sh | sh -s -- --bin-dir /root/.local/bin
     fi
     
