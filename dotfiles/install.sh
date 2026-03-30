@@ -2,14 +2,32 @@
 
 set -e
 
+PURPLE='\033[0;35m'
+PURPLE_BRIGHT='\033[1;35m'
+PURPLE_GLOW='\033[38;5;135m'
+DARK='\033[0;30m'
+BG='\033[48;5;27m'
+GRAY='\033[0;90m'
+WHITE='\033[1;37m'
+NC='\033[0m'
+BOLD='\033[1m'
+
+clear
+echo -e "${PURPLE}"
+echo "  ██████╗ ██████╗ ██████╗ ███████╗███████╗████████╗ ██████╗ ███╗   ██╗"
+echo "  ██╔══██╗██╔══██╗██╔══██╗██╔════╝██╔════╝╚══██╔══╝██╔═══██╗████╗  ██║"
+echo "  ██████╔╝██████╔╝██████╔╝█████╗  ███████╗   ██║   ██║   ██║██╔██╗ ██║"
+echo "  ██╔═══╝ ██╔══██╗██╔══██╗██╔══╝  ╚════██║   ██║   ██║   ██║██║╚██╗██║"
+echo -e "  ██║     ██║  ██║██║  ██║███████╗███████║   ██║   ╚██████╔╝██║ ╚████║"
+echo "  ╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═══╝"
+echo -e "                     ${PURPLE_GLOW}▓▓▓ ${WHITE}INSTALADOR ${PURPLE_GLOW}▓▓▓${NC}"
+echo ""
+
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DOTFILES_DIR="$SCRIPT_DIR"
 BACKUP_DIR="$HOME/.dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
 
-echo "=== Instalador de Dotfiles ==="
-
-echo ""
-echo "=== Instalando paquetes ==="
+echo -e "${PURPLE_GLOW}[♦]${NC} ${BOLD}Instalando paquetes...${NC}"
 PACKAGES="zsh cargo micro zoxide fzf bat eza curl wget git python3-pip fontconfig"
 
 if command -v nala &> /dev/null; then
@@ -17,54 +35,49 @@ if command -v nala &> /dev/null; then
 elif command -v apt &> /dev/null; then
     sudo apt install -y $PACKAGES
 else
-    echo "No se encontro apt/nala. Instala los paquetes manualmente."
+    echo -e "${PURPLE_GLOW}[!]${NC} No se encontro apt/nala."
     exit 1
 fi
 
 export PATH="$HOME/.local/bin:$PATH"
 
 echo ""
-echo "=== Instalando Oh My Zsh ==="
+echo -e "${PURPLE_GLOW}[♦]${NC} ${BOLD}Instalando Oh My Zsh...${NC}"
 if [[ ! -f "$HOME/.oh-my-zsh/oh-my-zsh.sh" ]]; then
     rm -rf "$HOME/.oh-my-zsh"
     git clone https://github.com/ohmyzsh/ohmyzsh.git "$HOME/.oh-my-zsh"
 fi
 
-echo ""
-echo "=== Instalando powerlevel10k ==="
+echo -e "${PURPLE_GLOW}[♦]${NC} ${BOLD}Instalando powerlevel10k...${NC}"
 if [[ ! -d "$HOME/.oh-my-zsh/themes/powerlevel10k" ]]; then
     git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME/.oh-my-zsh/themes/powerlevel10k"
 fi
 
-echo ""
-echo "=== Instalando fzf-tab ==="
+echo -e "${PURPLE_GLOW}[♦]${NC} ${BOLD}Instalando fzf-tab...${NC}"
 FZF_TAB_DIR="$HOME/.oh-my-zsh/custom/plugins/fzf-tab"
 if [[ ! -d "$FZF_TAB_DIR" ]]; then
     git clone https://github.com/Aloxaf/fzf-tab "$FZF_TAB_DIR"
 fi
 
-echo ""
-echo "=== Instalando zsh-autosuggestions ==="
+echo -e "${PURPLE_GLOW}[♦]${NC} ${BOLD}Instalando zsh-autosuggestions...${NC}"
 ZSH_AUTOSUGGEST_DIR="$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
 if [[ ! -d "$ZSH_AUTOSUGGEST_DIR" ]]; then
     git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_AUTOSUGGEST_DIR"
 fi
 
-echo ""
-echo "=== Instalando zsh-syntax-highlighting ==="
+echo -e "${PURPLE_GLOW}[♦]${NC} ${BOLD}Instalando zsh-syntax-highlighting...${NC}"
 ZSH_SYNTAX_DIR="$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
 if [[ ! -d "$ZSH_SYNTAX_DIR" ]]; then
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_SYNTAX_DIR"
 fi
 
-echo ""
-echo "=== Instalando atuin ==="
+echo -e "${PURPLE_GLOW}[♦]${NC} ${BOLD}Instalando atuin...${NC}"
 if ! command -v atuin &> /dev/null; then
     curl -L https://setup.atuin.sh | sh
 fi
 
 echo ""
-echo "=== Instalando Nerd Fonts ==="
+echo -e "${PURPLE_GLOW}[♦]${NC} ${BOLD}Instalando Nerd Fonts (MesloLGS)...${NC}"
 FONT_DIR="/usr/local/share/fonts/meslo"
 if [[ ! -f "$FONT_DIR/MesloLGS NF Regular.ttf" ]]; then
     sudo mkdir -p "$FONT_DIR"
@@ -76,13 +89,13 @@ if [[ ! -f "$FONT_DIR/MesloLGS NF Regular.ttf" ]]; then
 fi
 
 echo ""
-echo "=== Respaldando configuraciones existentes ==="
+echo -e "${PURPLE_GLOW}[▓]${NC} ${BOLD}Respaldando configuraciones existentes...${NC}"
 mkdir -p "$BACKUP_DIR"
 
 backup_file() {
     if [[ -e "$HOME/$1" ]]; then
         cp -r "$HOME/$1" "$BACKUP_DIR/"
-        echo "  Respaldado: $1"
+        echo -e "${PURPLE_GLOW}  ✓${NC} Respaldado: $1"
     fi
 }
 
@@ -96,7 +109,7 @@ backup_file ".cargo/env"
 [[ -f "$HOME/.local/share/zoxide/db.zo" ]] && backup_file ".local/share/zoxide"
 
 echo ""
-echo "=== Vinculando configuraciones ==="
+echo -e "${PURPLE_GLOW}[▓]${NC} ${BOLD}Vinculando configuraciones...${NC}"
 ln -sf "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
 ln -sf "$DOTFILES_DIR/zsh/.zprofile" "$HOME/.zprofile"
 ln -sf "$DOTFILES_DIR/zsh/.zshenv" "$HOME/.zshenv"
@@ -113,7 +126,7 @@ mkdir -p "$HOME/.local/share/zoxide"
 [[ -f "$DOTFILES_DIR/zoxide/db.zo" ]] && ln -sf "$DOTFILES_DIR/zoxide/db.zo" "$HOME/.local/share/zoxide/db.zo"
 
 echo ""
-echo "=== Instalando configuraciones de root ==="
+echo -e "${PURPLE_GLOW}[▓]${NC} ${BOLD}Instalando configuraciones de ROOT...${NC}"
 if [[ -d "$DOTFILES_DIR/zsh/root" ]]; then
     ROOT_BACKUP="/root/.dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
     sudo mkdir -p "$ROOT_BACKUP"
@@ -137,31 +150,42 @@ if [[ -d "$DOTFILES_DIR/zsh/root" ]]; then
     sudo mkdir -p /root/.local/share/zoxide
     [[ -f "$DOTFILES_DIR/zsh/root/.local/share/zoxide/db.zo" ]] && sudo cp "$DOTFILES_DIR/zsh/root/.local/share/zoxide/db.zo" /root/.local/share/zoxide/db.zo
     
-    echo "  Instalando Oh My Zsh para root..."
+    echo -e "${PURPLE_GLOW}  →${NC} Instalando Oh My Zsh para root..."
     if [[ ! -f "/root/.oh-my-zsh/oh-my-zsh.sh" ]]; then
         sudo git clone https://github.com/ohmyzsh/ohmyzsh.git /root/.oh-my-zsh
     fi
     
-    echo "  Instalando plugins para root..."
+    echo -e "${PURPLE_GLOW}  →${NC} Instalando plugins para root..."
     [[ ! -d "/root/.oh-my-zsh/themes/powerlevel10k" ]] && sudo git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /root/.oh-my-zsh/themes/powerlevel10k
     [[ ! -d "/root/.oh-my-zsh/custom/plugins/fzf-tab" ]] && sudo git clone https://github.com/Aloxaf/fzf-tab /root/.oh-my-zsh/custom/plugins/fzf-tab
     [[ ! -d "/root/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]] && sudo git clone https://github.com/zsh-users/zsh-autosuggestions /root/.oh-my-zsh/custom/plugins/zsh-autosuggestions
     [[ ! -d "/root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" ]] && sudo git clone https://github.com/zsh-users/zsh-syntax-highlighting.git /root/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
     
-    echo "  Instalando atuin para root..."
+    echo -e "${PURPLE_GLOW}  →${NC} Instalando atuin para root..."
     if ! sudo -u root command -v atuin &> /dev/null; then
         curl -L https://setup.atuin.sh | sh -s -- --bin-dir /root/.local/bin
     fi
     
     sudo chsh -s $(which zsh)
-    echo "  Configuraciones de root instaladas"
 fi
 
 echo ""
-echo "=== Cambiando shell a zsh ==="
+echo -e "${PURPLE_GLOW}[▓]${NC} ${BOLD}Cambiando shell a zsh...${NC}"
 sudo chsh -s $(which zsh)
 
 echo ""
-echo "=== Listo! ==="
-echo "Cierra sesion y vuelve a entrar, o ejecuta: exec zsh"
-echo "Respaldo guardado en: $BACKUP_DIR"
+echo -e "${PURPLE_BRIGHT}"
+echo "  ╔═══════════════════════════════════════════════════════════════╗"
+echo "  ║                                                               ║"
+echo "  ║${WHITE}            ██╗   ██╗██╗ ██████╗████████╗██╗   ██╗██████╗       ${PURPLE_BRIGHT}║"
+echo "  ║${WHITE}            ██║   ██║██║██╔════╝╚══██╔══╝██║   ██║██╔══██╗      ${PURPLE_BRIGHT}║"
+echo "  ║${WHITE}            ██║   ██║██║██║        ██║   ██║   ██║██████╔╝      ${PURPLE_BRIGHT}║"
+echo "  ║${WHITE}            ╚██╗ ██╔╝██║██║        ██║   ██║   ██║██╔══██╗      ${PURPLE_BRIGHT}║"
+echo "  ║${WHITE}             ╚████╔╝ ██║╚██████╗   ██║   ╚██████╔╝██║  ██║      ${PURPLE_BRIGHT}║"
+echo "  ║${WHITE}              ╚═══╝  ╚═╝ ╚═════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═╝      ${PURPLE_BRIGHT}║"
+echo "  ║                                                               ║"
+echo -e "  ╚═══════════════════════════════════════════════════════════════╝${NC}"
+echo ""
+echo -e "${PURPLE_GLOW}[✓]${NC} ${BOLD}Cierra sesion y vuelve a entrar, o ejecuta: ${WHITE}exec zsh${NC}"
+echo -e "${PURPLE_GLOW}[✓]${NC} ${BOLD}Respaldo guardado en: ${WHITE}$BACKUP_DIR${NC}"
+echo ""
