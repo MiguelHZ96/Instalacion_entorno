@@ -90,10 +90,10 @@ if [[ "$IS_DESKTOP" == "true" ]]; then
 fi
 
 if command -v nala &> /dev/null; then
-    sudo nala install -y $PACKAGES 2>/dev/null || true
+    sudo nala install -y $PACKAGES
 fi
 if command -v apt &> /dev/null; then
-    sudo apt install -y $PACKAGES 2>/dev/null || true
+    sudo apt install -y $PACKAGES
 fi
 
 echo -e "${PURPLE_GLOW}▸${NC} ${BOLD}Instalando eza (alternativa moderna de ls)...${NC}"
@@ -280,7 +280,19 @@ if [[ -d "$DOTFILES_DIR/zsh/root" ]]; then
 
 echo ""
 echo -e "${PURPLE_GLOW}▸${NC} ${BOLD}Cambiando shell a zsh...${NC}"
-sudo chsh -s $(which zsh)
+if command -v zsh &> /dev/null; then
+    ZSH_PATH=$(command -v zsh)
+    sudo chsh -s "$ZSH_PATH"
+    echo -e "${PURPLE_BRIGHT}[✓]${NC} Shell cambiado a zsh"
+elif [[ -x /bin/zsh ]]; then
+    sudo chsh -s /bin/zsh
+    echo -e "${PURPLE_BRIGHT}[✓]${NC} Shell cambiado a /bin/zsh"
+elif [[ -x /usr/bin/zsh ]]; then
+    sudo chsh -s /usr/bin/zsh
+    echo -e "${PURPLE_BRIGHT}[✓]${NC} Shell cambiado a /usr/bin/zsh"
+else
+    echo -e "${RED}[✗]${NC} zsh no encontrado. Instálalo manualmente: sudo apt install zsh && chsh -s /bin/zsh"
+fi
 
 echo ""
 echo -e "${PURPLE_GLOW}═══════════════════════════════════════════════════════════════════════════════════${NC}"
